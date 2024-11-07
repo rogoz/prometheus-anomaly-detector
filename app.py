@@ -1,4 +1,5 @@
 """docstring for packages."""
+import multiprocessing
 import time
 import os
 import logging
@@ -11,6 +12,8 @@ import tornado.ioloop
 import tornado.web
 from prometheus_client import Gauge, generate_latest, REGISTRY
 from prometheus_api_client import PrometheusConnect, Metric
+
+
 from configuration import Configuration
 import model
 import schedule
@@ -166,17 +169,19 @@ def train_model(initial_run=False, data_queue=None):
     data_queue.put(PREDICTOR_MODEL_LIST)
 
 
+
+
 if __name__ == "__main__":
     # Queue to share data between the tornado server and the model training
+    multiprocessing.set_start_method('fork')
     predicted_model_queue = Queue()
-
     # Initial run to generate metrics, before they are exposed
     train_model(initial_run=True, data_queue=predicted_model_queue)
-
-    # Set up the tornado web app
-    app = make_app(predicted_model_queue)
-    app.listen(8080)
-    server_process = Process(target=tornado.ioloop.IOLoop.instance().start)
+    def run_server():
+        app = make_app(predicted_model_queue)
+        app.listen(8080)
+        tornado.ioloop.IOLoop.current().start()
+    server_process = Process(target=run_server)
     # Start up the server to expose the metrics.
     server_process.start()
 
