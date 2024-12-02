@@ -1,11 +1,8 @@
-pandas
+pandas==1.5.0
+prophet
 schedule
 prometheus_client
 prometheus_api_client
 tornado
-pystan==2.14
-prophet
 mlflow
-numpy
 scikit-learn
-tensorflow>=2.0,<2.15

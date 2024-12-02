@@ -31,7 +31,7 @@ class Configuration:
     # it will scrape all the timeseries that match the config.
     metrics_list = str(
         os.getenv(
-            "FLT_METRICS_LIST", "up{app='openshift-web-console', instance='172.44.0.18:8443'}"
+            "FLT_METRICS_LIST", "up{app='k8s-web-console', instance='172.44.0.18:8443'}"
         )
     ).split(";")
 

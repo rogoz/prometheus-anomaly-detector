@@ -36,7 +36,7 @@ class Configuration:
     metrics_list = str(
         os.getenv(
             "FLT_METRICS_LIST",
-            "up{app='openshift-web-console', instance='172.44.0.18:8443'}",
+            "up{app='k8s-web-console', instance='172.44.0.18:8443'}",
         )
     ).split(";")
 

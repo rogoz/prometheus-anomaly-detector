@@ -107,5 +107,15 @@ You can now view the metrics being logged in your MLFlow tracking server UI.
 
 ![Screenshot from 2019-09-04 15-27-36](https://user-images.githubusercontent.com/7343099/64284885-8e075f00-cf28-11e9-877c-ebe4e397d2fe.png)
 
+    docker run --name test -p 8080:8080 \
+        --env FLT_PROM_URL=https://prometheus-ns-team-arm-validation.corp.ethos21-stage-nld2.ethos.adobe.net \
+        --env FLT_RETRAINING_INTERVAL_MINUTES=15 \
+        --env FLT_METRICS_LIST='usm_object_cpu_utilisation_value{aem_env_name="dev42", aem_env_type="dev", aem_hipaa="false", aem_multi_region="false", aem_pod_type="publish", aem_program="AEM-K8s-Base", aem_program_type="standard", aem_sandbox="false", aem_sla_9999="false", aem_tenant_id="aemk8s-helm-dev", cluster="ethos21stagenld2", namespace="ns-team-arm-validation"}' \
+        --env APP_FILE=app.py \
+        --env FLT_DATA_START_TIME=3d \
+        --env FLT_ROLLING_TRAINING_WINDOW_SIZE=15d \
+        54c336d6d85c0fb6e750be3801697e3391abf3dca0dd394f019660d589f2b8c5
 
+
+docker run --name test -p 8080:8080 docker2-granite-release-local.dr-uw2.adobeitc.com/skyops/pad
 
